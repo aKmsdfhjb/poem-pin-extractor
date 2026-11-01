@@ -12,7 +12,7 @@ Open `index.html` for the browser demonstration. Text is processed locally in th
 ## Key repository references
 
 - [Source repository](https://github.com/aKmsdfhjb/poem-pin-extractor)
-- [README](../../README.md)
+- [README](https://github.com/aKmsdfhjb/poem-pin-extractor#readme)
 - [Architecture](Architecture.md)
 
 ## Scope and limitations
