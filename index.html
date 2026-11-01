@@ -4,5 +4,32 @@
 </style></head><body><main class="wrap"><div class="top"><span>AK / PROJECTS</span><span class="index">03 — PYTHON · TEXT PROCESSING</span></div><h1>Read between <em>the lines.</em></h1><p class="intro">A small text-processing experiment. For each line, select the word whose position matches that line's index, then record its character count.</p><hr class="rule"><div class="grid"><section class="panel"><div class="eyebrow">01 / Source text</div><label for="poem">MULTI-LINE TEXT · ONE ENTRY</label><textarea id="poem">The sky is blue
 Birds fly high
 Nature is quite beautiful</textarea><div class="actions"><button id="extract">Extract sequence</button><button id="clear" class="secondary">Clear</button></div><p class="note">Line 1 uses word 1, line 2 uses word 2, line 3 uses word 3. If a line is too short, the output digit is 0.</p></section><section class="panel"><div class="eyebrow">02 / Extraction result</div><label>GENERATED SEQUENCE</label><div id="result" class="result" aria-live="polite">335</div><div class="actions"><button id="copy" class="secondary">Copy sequence</button></div><div id="steps" class="steps"><div class="step"><span>01</span><span>“The” · 3 letters</span><b>3</b><span>02</span><span>“fly” · 3 letters</span><b>3</b><span>03</span><span>“quite” · 5 letters</span><b>5</b></div></div><p class="note">Educational text transformation only. The output is predictable and must not be used as a real password, PIN or security credential.</p></section></div><div class="foot"><span>POEM PIN EXTRACTOR / INTERACTIVE EDITION</span><span>RESEARCH → BUILD → TEST → SHIP</span></div></main><script>
-const $=id=>document.getElementById(id);function extract(){const lines=$("poem").value.split(/\r?\n/);let code="",rows=[];lines.forEach((line,i)=>{const words=line.trim().split(/\s+/).filter(Boolean);const word=words[i];const digit=word?String(word.length):"0";code+=digit;rows.push('<div class="step"><span>'+String(i+1).padStart(2,"0")+'</span><span>'+(word?JSON.stringify(word)+" · "+word.length+" letters":"No word at position "+(i+1))+'</span><b>'+digit+'</b></div>')});$("result").textContent=code||"—";$("steps").innerHTML=rows.join("")||"No lines to process."}$("extract").addEventListener("click",extract);$("clear").addEventListener("click",()=>{$("poem").value="";extract()});$("copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("result").textContent)}catch{}});extract();
+const $=id=>document.getElementById(id);
+function extract(){
+ const lines=$("poem").value.split(/\r?\n/);
+ let code="";
+ const rows=[];
+ lines.forEach((line,i)=>{
+  const words=line.trim().split(/\s+/).filter(Boolean);
+  const word=words[i];
+  const digit=word?String(word.length):"0";
+  code+=digit;
+  const row=document.createElement("div");
+  row.className="step";
+  const index=document.createElement("span");
+  index.textContent=String(i+1).padStart(2,"0");
+  const description=document.createElement("span");
+  description.textContent=word?JSON.stringify(word)+" · "+word.length+" letters":"No word at position "+(i+1);
+  const value=document.createElement("b");
+  value.textContent=digit;
+  row.append(index,description,value);
+  rows.push(row);
+ });
+ $("result").textContent=code||"—";
+ $("steps").replaceChildren(...rows);
+}
+$("extract").addEventListener("click",extract);
+$("clear").addEventListener("click",()=>{$("poem").value="";extract()});
+$("copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("result").textContent)}catch{}});
+extract();
 </script></body></html>
