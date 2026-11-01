@@ -9,7 +9,7 @@ class PinExtractorTests(unittest.TestCase):
         self.assertEqual(pin_extractor(poems), ["335"])
 
     def test_missing_word_uses_zero(self):
-        self.assertEqual(pin_extractor(["One\nTwo words\nThree"]), ["120"])
+        self.assertEqual(pin_extractor(["One\nTwo words\nThree"]), ["350"])
 
     def test_empty_entry(self):
         self.assertEqual(pin_extractor([""]), ["0"])
