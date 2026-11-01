@@ -1,80 +1,75 @@
-Poem PIN Extractor
+# Poem PIN Extractor
 
-📖 Description
+A small Python text-processing utility that creates a reproducible digit sequence from a multi-line text. For line index `i`, it measures the length of the word at word index `i`; if that word does not exist, it appends `0`.
 
-The Poem PIN Extractor is a Python-based utility that generates unique numerical security codes (PINs) from strings of text or poetry. This tool analyzes the structure of a poem—specifically word lengths at increasing line indices—to create a distinct digital signature.
+The repository includes a browser interface that demonstrates the same algorithm locally.
 
-How it Works
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+![Frontend](https://img.shields.io/badge/Frontend-Vanilla%20JS-f0db4f?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-171715?style=flat-square)
 
-The tool processes text line-by-line following a diagonal extraction logic:
+## Live interface
 
-Line 1 (Index 0): Measures the length of the 1st word.
+After enabling **Settings → Pages → Build and deployment → GitHub Actions**, visit:
 
-Line 2 (Index 1): Measures the length of the 2nd word.
+[Open the text extractor](https://aKmsdfhjb.github.io/poem-pin-extractor/)
 
-Line 3 (Index 2): Measures the length of the 3rd word, and so on.
+## Example
 
-If a line does not have enough words to match the required index, it defaults to 0. This creates a consistent, reproducible PIN for any given text.
+Input:
 
-🚀 Features
+```text
+The sky is blue
+Birds fly high
+Nature is quite beautiful
+```
 
-Dynamic Input: Allows users to input multiple text blocks in one session.
+- Line 1, word 1: `The` → 3
+- Line 2, word 2: `fly` → 3
+- Line 3, word 3: `quite` → 5
 
-Error Handling: Built-in support for short lines or empty inputs using 0 placeholders.
+Output: `335`
 
-Clean Formatting: Outputs results as a list of strings for easy data processing.
+## Flowchart
 
-🛠️ Usage
+```mermaid
+flowchart TD
+ A[Receive multi-line text] --> B[Split into lines]
+ B --> C[Read each line index i]
+ C --> D[Split line into words]
+ D --> E{Word i exists?}
+ E -->|Yes| F[Append selected word length]
+ E -->|No| G[Append 0]
+ F --> H{More lines?}
+ G --> H
+ H -->|Yes| C
+ H -->|No| I[Return digit sequence]
+```
 
-1. Clone the repository
+## Run locally
 
-git clone [https://github.com/aKmsdfhjb/poem-pin-extractor.git](https://github.com/aKmsdfhjb/poem-pin-extractor.git)
+Python:
 
+```bash
+python main.py
+```
 
-2. Run the generator
+Browser interface: open `index.html` in a modern browser. The interface processes text locally and does not upload it.
 
-python pin_extractor.py
+## Project structure
 
+- `main.py` — `pin_extractor(poems)` and command-line interaction.
+- `index.html` — interactive browser demonstration.
+- `.github/workflows/pages.yml` — GitHub Pages deployment workflow.
 
-3. Logic Example
+## Security note
 
-Input Text:
+This is a deterministic educational text transformation, not a cryptographic function. Its output is predictable and must not be used as a real PIN, password or security credential.
 
-"The sky is blue"
+## Documentation and Wiki
 
-"Birds fly high"
+Use this README for the project guide. Longer notes can live under `docs/`. A native GitHub Wiki is separate from repository files and must be enabled in repository settings before pages can be added.
 
-"Nature is quite beautiful"
+## License
 
-Extraction:
-
-Line 0, Word 0: "The" (Length 3)
-
-Line 1, Word 1: "fly" (Length 3)
-
-Line 2, Word 2: "quite" (Length 5)
-
-Resulting PIN: 335
-
-🧪 Function Signature
-
-def pin_extractor(poems):
-    """
-    Args:
-        poems (list): List of multi-line strings.
-    Returns:
-        list: List of numerical strings.
-    """
-
-
-📄 License
-
-MIT License
-
-Copyright (c) 2026 aKmsdfhjb
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+MIT — see [LICENSE](LICENSE).
