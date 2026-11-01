@@ -73,3 +73,11 @@ Use this README for the project guide. Longer notes can live under `docs/`. A na
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+
+## Project Wiki
+
+- [Wiki home](docs/wiki/Home.md)
+- [Architecture and deployment](docs/wiki/Architecture.md)
+
+The repository keeps a version-controlled wiki source under `docs/wiki/`.
